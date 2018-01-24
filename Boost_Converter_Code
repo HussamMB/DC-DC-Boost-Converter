@@ -1,9 +1,64 @@
-void setup() {
-  pinMode(9, OUTPUT);
+
+int p=1;
+int pwmpin=9;
+void setup()
+{
+setPwmFrequency(pwmpin, 1);
+analogWrite(pwmpin,p);
+//Serial.begin(9600);
+//S/erial.println("HAII");
+//delay(5000);delay(5000);
+}
+void loop()
+{
+
+int a=analogRead(A2);
+delay(1);
+//Serial.println(a);
+//Serial.print("P=");
+//Serial.println(p);
+
+if(a>220)
+{
+  p=p-1;
+  analogWrite(pwmpin,p);
+  if(p<0)p=0;
+}
+if (a<205 )//&& a>150
+{
+  p=p+1;
+  if(p>220)p=220;
+  analogWrite(pwmpin,p);  
+}
+}
+
+void setPwmFrequency(int pin, int divisor) {
+  byte mode;
+  if(pin == 5 || pin == 6 || pin == 9 || pin == 10) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 64: mode = 0x03; break;
+      case 256: mode = 0x04; break;
+      case 1024: mode = 0x05; break;
+      default: return;
+    }
+    if(pin == 5 || pin == 6) {
+      TCCR0B = TCCR0B & 0b11111000 | mode;
+    } else {
+      TCCR1B = TCCR1B & 0b11111000 | mode;
+    }
+  } else if(pin == 3 || pin == 11) {
+    switch(divisor) {
+      case 1: mode = 0x01; break;
+      case 8: mode = 0x02; break;
+      case 32: mode = 0x03; break;
+      case 64: mode = 0x04; break;
+      case 128: mode = 0x05; break;
+      case 256: mode = 0x06; break;
+      case 1024: mode = 0x7; break;
+      default: return;
+    }
+    TCCR2B = TCCR2B & 0b11111000 | mode;
   }
-void loop() {
-  digitalWrite(9, HIGH);
-  delay(0.024667);
-  digitalWrite(9,LOW);
-  delay(0.008667);
-  }
+}
