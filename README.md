@@ -1,0 +1,2 @@
+# DC-DC-Boost-Converter
+A DC-to-DC converter is an electronic circuit or electromechanical device that converts a source of direct current (DC) from one voltage level to another. It is a type of electric power converter. Power levels range from very low (small batteries) to very high (high-voltage power transmission). In this project we will build a boost converter to step-up the voltage from 5V to 20 V.
